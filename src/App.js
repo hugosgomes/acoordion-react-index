@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { Icon, Row, Col } from 'antd';
-import { Texts } from '../Helpers/Texts';
+import React, { useState } from "react";
 
 const CommonQuestionsCurriculum = () => {
   const [questions, setQuestions] = useState([
@@ -35,27 +33,23 @@ const CommonQuestionsCurriculum = () => {
       answer: `It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or looking at its layout. The point of using Lorem Ipsum is that it has a more-or looking at its layout. The point of using Lorem Ipsum is that it has a more-or`,
     },
   ]);
+  const [value, setValue] = useState(0); 
 
   const handleClickQuestion = (label, index) => {
-    let aux = questions;
-    if (aux[index].status === false) {
-      setQuestions([...questions, (questions[index].status = true)]);
-    } else if (aux[index].status === true) {
-      setQuestions([...questions, (questions[index].status = false)]);
-    }
-    console.log(questions[index].status);
-    console.log(index);
+    let questionsLocal = questions;
+    questionsLocal[index].status = !questionsLocal[index].status;
+    setQuestions([]);
+    setQuestions(questionsLocal);
+    setValue(value => value + 1);
+    console.log("questions", questions);
   };
-  console.log(questions);
-
-  useEffect(() => {}, []);
 
   return (
     <div>
       <div
         style={{
-          display: 'flex',
-          justifyContent: 'center',
+          display: "flex",
+          justifyContent: "center",
           minHeight: 400,
           marginTop: 32,
           marginLeft: 40,
@@ -68,29 +62,29 @@ const CommonQuestionsCurriculum = () => {
           xl={18}
           xxl={15}
           style={{
-            textAlign: 'center',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-around',
+            textAlign: "center",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-around",
           }}
         >
           <div>
             <div>
               <h1
-                style={{ position: 'relative', fontSize: 24 }}
-                className={'title title-line'}
+                style={{ position: "relative", fontSize: 24 }}
+                className={"title title-line"}
               >
-                {' '}
-                Perguntas frequentes / Dúvidas currículo{' '}
+                {" "}
+                Perguntas frequentes / Dúvidas currículo{" "}
               </h1>
             </div>
           </div>
           <div
             style={{
-              display: 'flex',
-              margin: '32px auto',
-              flexDirection: 'column',
-              width: '80%',
+              display: "flex",
+              margin: "32px auto",
+              flexDirection: "column",
+              width: "80%",
             }}
           >
             {questions.map((question, index) => {
@@ -99,45 +93,31 @@ const CommonQuestionsCurriculum = () => {
                   className="querys"
                   onClick={() => handleClickQuestion(`card0${index}`, index)}
                 >
-                  {question.status === false ? (
-                    <div>
-                      <div
-                        style={{
-                          display: 'flex',
-                          justifyContent: 'space-between',
-                          alignItems: 'center',
-                          fontSize: 24,
-                          fontWeight: '400px',
-                          marginBottom: 16,
-                        }}
-                      >
-                        <div>{question.title}</div>
-                      </div>
+                  <>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        fontSize: 24,
+                        fontWeight: "400px",
+                        marginBottom: 16,
+                      }}
+                    >
+                      {question.title}
                     </div>
-                  ) : (
-                    <>
-                      <div
-                        style={{
-                          display: 'flex',
-                          justifyContent: 'space-between',
-                          alignItems: 'center',
-                          fontSize: 24,
-                          fontWeight: '400px',
-                          marginBottom: 16,
-                        }}
-                      >
-                        {question.title}
-                      </div>
-
-                      <span>{question.answer}</span>
-                      <div
-                        style={{
-                          borderBottom: '4px solid #1680CE99',
-                          marginTop: '14px',
-                        }}
-                      />
-                    </>
-                  )}
+                    {question.status && (
+                      <>
+                        <span>{question.answer}</span>
+                        <div
+                          style={{
+                            borderBottom: "4px solid #1680CE99",
+                            marginTop: "14px",
+                          }}
+                        />
+                      </>
+                    )}
+                  </>
                 </div>
               );
             })}
